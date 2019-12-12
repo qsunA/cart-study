@@ -1,13 +1,21 @@
 import React from 'react';
 import './App.css';
 import DisplayItemList from './component/display/DisplayItemList';
-import { CartProvider, CartConsumer } from './store/CartProvider';
 import ShoppingCart from './component/cart/ShoppingCart';
+import CartProvider from './store/CartProvider.component';
+import ItemProvider from './store/ItemProvider.component';
 
 function App() {
   return (
     <div className="App">
-      <CartProvider>
+      <ItemProvider>
+        <CartProvider>
+          <DisplayItemList className="display-wrapper"/>
+          <ShoppingCart className="shopping-wrapper"/>
+        </CartProvider>
+      </ItemProvider>
+      
+      {/* <CartProvider>
         <DisplayItemList className="display-wrapper"/>
         <hr/>
         <CartConsumer>
@@ -17,7 +25,7 @@ function App() {
             }
           }
         </CartConsumer>        
-      </CartProvider>      
+      </CartProvider>       */}
     </div>
   );
 }

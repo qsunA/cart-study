@@ -1,12 +1,14 @@
-import React,{useCallback} from 'react';
+import React,{useCallback, useContext} from 'react';
 import ItemInfo from '../common/ItemInfo';
 import { Fab } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import { CartContext } from '../../store/Cart.context';
 
-const DisplayItem = ({item, onAdd})=>{
+const DisplayItem = ({item})=>{
+    const {addCartItems} = useContext(CartContext);
     const onAddCart = useCallback(() => {
-        onAdd(item);
-    },[onAdd,item]);
+       addCartItems(item);
+    },[addCartItems,item]);
 
     return(
         <div className="display-item-wrapper">

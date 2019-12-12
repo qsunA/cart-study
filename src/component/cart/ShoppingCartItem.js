@@ -1,16 +1,18 @@
-import React,{useState, useCallback, useEffect} from 'react';
+import React,{useState, useCallback, useEffect, useContext} from 'react';
 import ItemInfo from '../common/ItemInfo';
 import { Fab } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { CartContext } from '../../store/Cart.context';
 
-const ShoppingCartItem = ({item, actions})=>{
+const ShoppingCartItem = ({item})=>{
     const [quantity, setQuantity] = useState(item.quantity);
     const [checkFlag, setCheckFlag] = useState(item.checkFlag);
+    const {updateItem,removeCartItems} = useContext(CartContext);
 
     const onChangeQuantity = useCallback((e) => {
         setQuantity(e.target.value);
-        actions.updateItemQuantity(item,e.target.value);
-    },[actions, item]);
+        updateItem(item, "quantity", e.target.value);
+    },[updateItem, item]);
     
     useEffect(() => {
         setQuantity(item.quantity);
@@ -21,13 +23,13 @@ const ShoppingCartItem = ({item, actions})=>{
     }, [item.checkFlag]);
 
     const onRemoveBtnClick = useCallback(() => {
-        actions.removeItems(item);
-    },[actions,item]);
+        removeCartItems(item);
+    },[removeCartItems,item]);
 
     const onChangeCheckBox = useCallback((e) => {
         setCheckFlag(prev=>!prev);
-        actions.updateItemCheckFlag({...item,checkFlag:!checkFlag});
-    },[actions,item,checkFlag]);
+        updateItem(item, "checkFlag",!checkFlag);
+    },[updateItem,item,checkFlag]);
 
     return(
         <div className="cart-item-box">
